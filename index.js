@@ -1,60 +1,53 @@
 import { myLibrary, Book, mockRecommendations } from "./library.js";
+import { renderBooks } from "./render.js";
 /*################################*/
 /*#######  HTML ELEMENTS ########*/
 /*################################*/
 const userBooksEl = document.querySelector(".user-books");
 const recommendationsEl = document.querySelector(".recommendations");
-let bookHtml = "";
-myLibrary.forEach(({ title, author, pages, cover }) => {
-  bookHtml += `
-  <div class="book">
-          <div class="book-image">
-          <img src="${cover}" alt="book cover"/>
-          </div>
-          <div class="book-details">
-            <h3 class="book-title">${title}</h3>
-            <p class="book-author">${author}</p>
-            <p class="book-pages">
-              Page Count: <span class="page-count">${pages} pp.</span>
-            </p>
-            <div class="read-status badge-unread">Unread</div>
-            <button class="read-btn">Read Now</button>
-          </div>
-          <div class="book-actions">
-         
-          <span class="material-symbols-outlined">
-done_all
-</span>
- <span class="material-symbols-outlined"> delete </span>
-        </div>
-        </div>
-`;
+renderBooks(userBooksEl, recommendationsEl);
+const form = document.querySelector(".modal-form");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const titleInput = document.getElementById("modal-book-title").value;
+  const authorInput = document.getElementById("modal-author").value;
+  const readLink = document.getElementById("modal-link").value;
+  const readStatus = document.querySelector(
+    'input[name="modal-read"]:checked',
+  ).value;
+  try {
+    const url = `https://openlibrary.org/search.json?title=${encodeURIComponent(titleInput)}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const bookData = data.docs?.[0] || {};
+    const id = crypto.randomUUID();
+    const title = bookData.title || titleInput;
+    const author = bookData.author_name
+      ? bookData.author_name[0]
+      : authorInput
+        ? authorInput
+        : "Unknown author";
+    const cover = bookData.cover_i
+      ? `https://covers.openlibrary.org/b/id/${bookData.cover_i}-L.jpg`
+      : "fallback-cover-url.jpg";
+    const pages =
+      bookData.number_of_pages_median || bookData.edition_count || 0;
+    console.log(bookData);
+    const newBook = new Book(
+      id,
+      title,
+      author,
+      pages,
+      cover,
+      readStatus,
+      readLink,
+    );
+    closeModal();
+    myLibrary.push(newBook);
+    renderBooks(userBooksEl, recommendationsEl);
+  } catch {
+    console.error("Failed to fetch bookData:", error);
+  }
 });
-userBooksEl.innerHTML = bookHtml;
-let recommendedBookHtml = "";
-mockRecommendations.forEach(({ title, author, pages, cover }) => {
-  recommendedBookHtml += `
-  <div class="recommended-book">
-          <div class="recommended-book-image">
-           <img src="${cover}" alt="book cover"/>
-           </div>
-          <div class="recommended-book-details">
-            <h3 class="recommended-book-title">${title}</h3>
-            <p class="recommended-book-author">${author}</p>
-            <p class="recommended-book-pages">
-              Page Count: <span class="page-count">${pages} pp.</span>
-            </p>
-            <div class="recommended-read-status badge-read">Read</div>
-            <button class="recommended-read-btn">Read </button>
-          </div>
-           <div class="recommended-book-actions">
-         
-          <span class="material-symbols-outlined">
-done_all
-</span>
- <span class="material-symbols-outlined"> delete </span>
-        </div>
-  </div>
-`;
-});
-document.querySelector(".recommendations").innerHTML = recommendedBookHtml;

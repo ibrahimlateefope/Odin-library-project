@@ -24,7 +24,7 @@
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-[data-theme="dark"] {
+.dark {
   --bg: #1f2129;
   --surface: #252832;
   --card: #2b2e38;
@@ -46,6 +46,7 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  transition: all 0.15s ease;
 }
 
 * {
@@ -314,6 +315,7 @@ button {
   border-radius: 25px;
   box-shadow: var(--shadow-lg);
   display: none;
+  transition: all 0.25s ease;
 }
 .modal-header {
   display: flex;
@@ -384,7 +386,7 @@ button {
   position: absolute;
   width: 33.333%;
   height: 95%;
-  background-color: var(--card);
+  background-color: var(--text);
   z-index: 2;
   border-radius: 8px;
   box-shadow: var(--shadow-sm);
@@ -413,6 +415,12 @@ button {
   transform: translateX(200%);
   transition: all 0.35s ease;
 }
+
+/* Selects the label immediately after a checked radio input inside .radios */
+.radios input[type="radio"]:checked + label {
+  color: var(--bg);
+  font-weight: bold;
+}
 .add-btn-overlay {
   position: fixed;
   background-color: var(--primary);
@@ -432,6 +440,12 @@ button {
 .container {
   position: relative;
   overflow-x: hidden;
+}
+.theme-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 14px;
 }
 @media (min-width: 577px) {
   .header-top {
@@ -465,6 +479,17 @@ button {
   }
   .book {
     flex-direction: column;
+  }
+  .book-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    flex: 1;
+  }
+  .read-btn {
+    width: 100%;
+    margin-top: auto;
   }
 }
 @media (min-width: 769px) {
@@ -513,6 +538,17 @@ button {
   }
   .book {
     flex-direction: column;
+  }
+  .book-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    flex: 1;
+  }
+  .read-btn {
+    width: 100%;
+    margin-top: auto;
   }
   .add-btn-overlay {
     display: none;
