@@ -392,6 +392,7 @@ button {
   box-shadow: var(--shadow-sm);
   left: 0;
   top: 0;
+  pointer-events: none;
 }
 
 .modal-submit {
@@ -421,6 +422,9 @@ button {
   color: var(--bg);
   font-weight: bold;
 }
+.open-modal {
+  user-select: none;
+}
 .add-btn-overlay {
   position: fixed;
   background-color: var(--primary);
@@ -446,6 +450,7 @@ button {
   justify-content: center;
   align-items: center;
   margin: 0 14px;
+  user-select: none;
 }
 @media (min-width: 577px) {
   .header-top {

@@ -1,4 +1,3 @@
-
 document.querySelectorAll(".menu").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     btn.classList.toggle("active");
@@ -40,5 +39,4 @@ closeModalEl.addEventListener("click", () => {
   closeModal();
 });
 import { myLibrary, Book, mockRecommendations } from "./library.js";
-document.querySelector(".user-books").addEventListener("click",(e)=>{
-})
+document.querySelector(".user-books").addEventListener("click", (e) => {});
