@@ -1,0 +1,76 @@
+:root {
+  --text: #1f2024;
+}
+
+[data-theme="dark"] {
+  --text-muted: #92939a;
+}
+.menu {
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  padding-right: 10px;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  -webkit-appearance: none;
+  z-index: 999;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu svg {
+  width: 64px;
+  height: 48px;
+  position: absolute;
+  top: -6px;
+  left: -14px;
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.menu path {
+  transition:
+    stroke-dasharray 0.85s ease,
+    stroke-dashoffset 0.85s ease;
+
+  stroke-dasharray: 26px 100px;
+  stroke-dashoffset: 126px;
+}
+
+.menu path:nth-child(2) {
+  --duration: 0.7s;
+  --offset: 100px;
+  --array: 74px;
+  stroke-dasharray: 26px 74px;
+  stroke-dashoffset: 100px;
+}
+
+.menu path:nth-child(3) {
+  stroke-dasharray: 26px 107px;
+  stroke-dashoffset: 133px;
+}
+
+.menu.active path {
+  stroke-dashoffset: 57px;
+}
+
+.menu.active path:nth-child(1),
+.menu.active path:nth-child(3) {
+  transition-delay: 0.15s;
+  transition-timing-function: cubic-bezier(0.2, 0.4, 0.2, 1.1);
+}
+
+.menu.active path:nth-child(2) {
+  transition-duration: 0.4s;
+  stroke-dasharray: 1px 74px;
+  stroke-dashoffset: 2px;
+}
+
+.menu.active path:nth-child(3) {
+  stroke-dashoffset: 58px;
+}
