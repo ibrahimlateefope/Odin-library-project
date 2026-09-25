@@ -1,9 +1,9 @@
-import { myLibrary, Book } from "./library.js";
+import { myLibrary, Book, mockRecommendations } from "./library.js";
 /*################################*/
 /*#######  HTML ELEMENTS ########*/
 /*################################*/
 const userBooksEl = document.querySelector(".user-books");
-const recommendationsEl=document.querySelector(".recommendations")
+const recommendationsEl = document.querySelector(".recommendations");
 let bookHtml = "";
 myLibrary.forEach(({ title, author, pages, cover }) => {
   bookHtml += `
